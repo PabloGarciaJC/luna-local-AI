@@ -2,11 +2,6 @@
 
 Stack completo de inteligencia artificial corriendo 100% en local con Docker. Sin enviar datos a terceros, sin coste por consulta, sin conexión a internet requerida.
 
-## Imágenes del Proyecto
-
-| ![Luna Chat](https://pablogarciajc.com/wp-content/uploads/2025/12/luna_1.webp) | ![Luna Panel](https://pablogarciajc.com/wp-content/uploads/2025/12/luna_2.webp) |
-|-----------|-----------|
-
 ## Tecnologías principales
 
 - **Ollama** (motor de modelos de lenguaje)

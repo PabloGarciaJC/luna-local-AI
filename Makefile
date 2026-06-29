@@ -3,7 +3,7 @@
 # ==============================
 # FIRST-TIME SETUP
 # ==============================
-init: prepare up pull-model
+init-app: prepare up pull-model
 
 # ==============================
 # PREPARE
@@ -11,6 +11,7 @@ init: prepare up pull-model
 prepare:
 	@[ ! -f .env ] && cp .env.example .env || true
 	@mkdir -p data/open-webui data/ollama data/chromadb data/n8n
+	@chmod +x scripts/*.sh
 
 # ==============================
 # DOCKER
@@ -80,16 +81,16 @@ nuke:
 # SHELL ACCESS
 # ==============================
 bash-ollama:
-	docker compose exec ollama bash
+	-./scripts/docker-bash-ollama.sh
 
 bash-webui:
-	docker compose exec open-webui bash
+	-./scripts/docker-bash-webui.sh
 
 bash-chromadb:
-	docker compose exec chromadb bash
+	-./scripts/docker-bash-chromadb.sh
 
 bash-n8n:
-	docker compose exec n8n sh
+	-./scripts/docker-bash-n8n.sh
 
 # ==============================
 # CLAUDE

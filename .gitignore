@@ -1,0 +1,14 @@
+.env
+.idea
+.vscode
+.cursor
+.mcp.json
+skills-lock.json
+CLAUDE.md
+
+# Runtime data (Docker volumes)
+data/ollama/
+data/open-webui/
+data/n8n/
+data/chromadb/
+

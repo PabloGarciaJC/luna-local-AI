@@ -1,0 +1,89 @@
+services:
+
+    # ==============================
+    # RUNTIME — ejecuta los modelos
+    # ==============================
+    ollama:
+        image: ollama/ollama:latest
+        ports:
+            - '${OLLAMA_PORT:-11434}:11434'
+        volumes:
+            - './data/ollama:/root/.ollama'
+            - '.:/app/proyecto'
+        networks:
+            - llm
+        restart: unless-stopped
+
+    # ==============================
+    # INTERFAZ — chat con el modelo
+    # ==============================
+    open-webui:
+        image: ghcr.io/open-webui/open-webui:main
+        ports:
+            - '${APP_PORT:-8080}:8080'
+        environment:
+            OLLAMA_BASE_URL: 'http://ollama:11434'
+            WEBUI_SECRET_KEY: '${WEBUI_SECRET_KEY:-changeme-secret-key}'
+            WEBUI_NAME: '${WEBUI_NAME:-Luna}'
+            DEFAULT_MODELS: '${AI_NAME}'
+            CHROMA_HTTP_HOST: chromadb
+            CHROMA_HTTP_PORT: 8000
+        volumes:
+            - './data/open-webui:/app/backend/data'
+        networks:
+            - llm
+        depends_on:
+            - ollama
+            - chromadb
+        restart: unless-stopped
+
+    # ==============================
+    # RAG — base de datos vectorial
+    # ==============================
+    chromadb:
+        image: chromadb/chroma:latest
+        ports:
+            - '${CHROMA_PORT:-8000}:8000'
+        volumes:
+            - './data/chromadb:/chroma/chroma'
+        networks:
+            - llm
+        restart: unless-stopped
+
+    # ==============================
+    # BASE DE DATOS — visor SQLite
+    # ==============================
+    sqlite-web:
+        image: coleifer/sqlite-web
+        ports:
+            - '${SQLITE_PORT:-8081}:8080'
+        environment:
+            SQLITE_DATABASE: /data/webui.db
+        volumes:
+            - './data/open-webui:/data'
+        networks:
+            - llm
+        restart: unless-stopped
+
+    # ==============================
+    # AGENTES — automatizaciones
+    # ==============================
+    n8n:
+        image: n8nio/n8n:latest
+        ports:
+            - '${N8N_PORT:-5678}:5678'
+        environment:
+            N8N_HOST: localhost
+            N8N_PORT: 5678
+            WEBHOOK_URL: 'http://localhost:5678'
+        volumes:
+            - './data/n8n:/home/node/.n8n'
+        networks:
+            - llm
+        restart: unless-stopped
+
+networks:
+    llm:
+        driver: bridge
+
+volumes: {}

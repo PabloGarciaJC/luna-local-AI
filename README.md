@@ -13,6 +13,20 @@ Stack completo de IA corriendo 100% en local con Docker. Sin enviar datos a terc
 | Agentes | **n8n** | Automatizaciones y flujos con la IA |
 | Base de datos | **SQLite** | Almacena usuarios, chats y configuración (gestionado por Open WebUI) |
 
+## Servicios
+
+Una vez levantado el stack, los servicios están disponibles en:
+
+| Servicio | URL | Descripción |
+| --- | --- | --- |
+| **Open WebUI (Luna)** | <http://localhost:8080> | Interfaz de chat principal |
+| **SQLite Web** | <http://localhost:8081> | Visor de la base de datos |
+| **Ollama API** | <http://localhost:11434> | API compatible con OpenAI |
+| **ChromaDB API** | <http://localhost:8000> | API de base de datos vectorial |
+| **n8n** | <http://localhost:5678> | Panel de automatizaciones |
+
+> Los puertos pueden cambiarse en el archivo `.env`.
+
 ## Instalación
 
 ```bash

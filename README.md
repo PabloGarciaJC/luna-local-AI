@@ -1,71 +1,87 @@
-# Local AI Stack
+# Luna Local AI Stack (Ollama + Open WebUI + ChromaDB + n8n)
 
-Stack completo de IA corriendo 100% en local con Docker. Sin enviar datos a terceros, sin coste por consulta, sin internet requerido.
+Stack completo de inteligencia artificial corriendo 100% en local con Docker. Sin enviar datos a terceros, sin coste por consulta, sin conexión a internet requerida.
 
-## AI Stack
+## Imágenes del Proyecto
+
+| ![Luna Chat](https://pablogarciajc.com/wp-content/uploads/2025/12/luna_1.webp) | ![Luna Panel](https://pablogarciajc.com/wp-content/uploads/2025/12/luna_2.webp) |
+|-----------|-----------|
+
+## Tecnologías principales
+
+- **Ollama** (motor de modelos de lenguaje)
+- **Open WebUI** (interfaz de chat)
+- **ChromaDB** (base de datos vectorial para RAG)
+- **n8n** (automatizaciones y agentes)
+- **SQLite** (base de datos interna)
+- **Docker** y **Docker Compose**
+
+## Stack de IA
 
 | Capa | Tecnología | Rol |
-| --- | --- | --- |
+|------|------------|-----|
 | Modelo | **llama3.2** (Luna) | LLM base con personalidad custom |
-| Motor LLM | **Ollama** | Descarga, gestiona y ejecuta los modelos de lenguaje |
+| Motor LLM | **Ollama** | Descarga, gestiona y ejecuta los modelos |
 | Interfaz | **Open WebUI** | Chat visual, gestión de modelos y documentos |
 | Memoria / RAG | **ChromaDB** | Vectoriza documentos para búsqueda semántica |
 | Agentes | **n8n** | Automatizaciones y flujos con la IA |
-| Base de datos | **SQLite** | Almacena usuarios, chats y configuración (gestionado por Open WebUI) |
-
-## Servicios
-
-Una vez levantado el stack, los servicios están disponibles en:
-
-| Servicio | URL | Descripción |
-| --- | --- | --- |
-| **Open WebUI (Luna)** | <http://localhost:8080> | Interfaz de chat principal |
-| **SQLite Web** | <http://localhost:8081> | Visor de la base de datos |
-| **Ollama API** | <http://localhost:11434> | API compatible con OpenAI |
-| **ChromaDB API** | <http://localhost:8000> | API de base de datos vectorial |
-| **n8n** | <http://localhost:5678> | Panel de automatizaciones |
-
-> Los puertos pueden cambiarse en el archivo `.env`.
+| Base de datos | **SQLite** | Almacena usuarios, chats y configuración |
 
 ## Instalación
 
-```bash
-git clone <repo>
-cd llm_verpa
-make init
-```
+### Requisitos Previos
 
-Los datos se sincronizan en `data/` del proyecto:
+- Tener **Docker** y **Docker Compose** instalados.
+- **Make**: Utilizado para automatizar procesos y gestionar contenedores de manera más eficiente.
 
-- `data/open-webui/` — chats, uploads, base de datos
-- `data/ollama/` — modelos descargados
-- `data/chromadb/` — vectores RAG
-- `data/n8n/` — workflows
+### Pasos de Instalación
 
-## Comandos
+1. Clona el repositorio desde GitHub.
+2. Dentro del repositorio encontrarás un archivo **Makefile** con los comandos necesarios para iniciar y gestionar la aplicación.
+3. Usa los siguientes comandos de **Make** para interactuar con la aplicación:
 
-```bash
-make init          # Primera vez: prepara + levanta + descarga modelo
-make up            # Levantar servicios
-make down          # Parar servicios
-make logs          # Ver logs en tiempo real
-make ps            # Estado de los contenedores
-make pull          # Descargar un modelo nuevo
-make list-models   # Ver modelos instalados
-make remove-model  # Eliminar un modelo
-make nuke          # Destruir todo (cuidado)
+   - **`make init-app`**: Inicializa los contenedores, prepara el entorno y descarga el modelo base.
+   - **`make up`**: Levanta todos los servicios.
+   - **`make down`**: Detiene los contenedores.
+   - **`make bash-ollama`**: Accede al shell del contenedor Ollama.
+   - **`make bash-webui`**: Accede al shell del contenedor Open WebUI.
+   - **`make bash-chromadb`**: Accede al shell del contenedor ChromaDB.
+   - **`make bash-n8n`**: Accede al shell del contenedor n8n.
 
-# Acceso a contenedores
-make bash-ollama    # Entrar al contenedor ollama
-make bash-webui     # Entrar al contenedor open-webui
-make bash-chromadb  # Entrar al contenedor chromadb
-make bash-n8n       # Entrar al contenedor n8n
-```
+4. Además de estos comandos, dentro del **Makefile** encontrarás otros que te permiten interactuar de manera más específica con los contenedores y servicios.
+
+5. Accede a los siguientes servicios una vez levantado el stack:
+
+| Servicio | URL | Descripción |
+|----------|-----|-------------|
+| **Open WebUI (Luna)** | [http://localhost:8080](http://localhost:8080) | Interfaz de chat principal |
+| **SQLite Web** | [http://localhost:8081](http://localhost:8081) | Visor de la base de datos |
+| **Ollama API** | [http://localhost:11434](http://localhost:11434) | API compatible con OpenAI |
+| **ChromaDB API** | [http://localhost:8000](http://localhost:8000) | API de base de datos vectorial |
+| **n8n** | [http://localhost:5678](http://localhost:5678) | Panel de automatizaciones |
+
+> Los puertos pueden cambiarse en el archivo `.env`.
 
 ## Requisitos mínimos
 
 | Componente | Mínimo |
-| --- | --- |
+|------------|--------|
 | RAM | 8 GB |
 | Disco | 10 GB libres |
 | Docker | 24+ |
+
+---
+
+## Contáctame / Sígueme en mis redes sociales
+
+| Red Social | Descripción | Enlace |
+|------------|-------------|--------|
+| **Facebook** | Conéctate y mantente al tanto de mis actualizaciones. | [Presiona aquí](https://www.facebook.com/PabloGarciaJC) |
+| **YouTube** | Fundamentos de la programación, tutoriales y noticias. | [Presiona aquí](https://www.youtube.com/@pablogarciajc) |
+| **Página Web** | Más información sobre mis proyectos y servicios. | [Presiona aquí](https://pablogarciajc.com/) |
+| **LinkedIn** | Sigue mi carrera profesional y establece conexiones. | [Presiona aquí](https://www.linkedin.com/in/pablogarciajc) |
+| **Instagram** | Fotos, proyectos y contenido relacionado. | [Presiona aquí](https://www.instagram.com/pablogarciajc) |
+| **Twitter** | Proyectos, pensamientos y actualizaciones. | [Presiona aquí](https://x.com/PabloGarciaJC) |
+
+---
+> _"La inteligencia artificial no reemplaza al ser humano, lo potencia."_
